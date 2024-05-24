@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
 import { app } from '../firebase'
-import { updateUserStart, updateUserSuccess, updateUserFailure } from '../redux/user/userSlice'
+import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure } from '../redux/user/userSlice'
 import { useDispatch } from 'react-redux'
+import Cookies from 'js-cookie'
 
 export default function Profile() {
     let { currentUser, loading, error } = useSelector(state => state.user)
@@ -45,6 +46,25 @@ export default function Profile() {
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
+    }
+
+    const handleDelete = async () => {
+        try {
+            dispatch(deleteUserStart())
+            const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+                method: 'DELETE',
+            });
+            const data = await res.json();
+            if (data.success == false) {
+                dispatch(deleteUserFailure(data.message))
+                return;
+            }
+
+            dispatch(deleteUserSuccess(data))
+
+        } catch (err) {
+            dispatch(deleteUserFailure(err.message))
+        }
     }
 
     const handleSubmit = async (e) => {
@@ -131,7 +151,7 @@ export default function Profile() {
                 </button>
             </form>
             <div className='flex justify-between m-5'>
-                <span className='text-red-600 cursor-pointer'>Delete account</span>
+                <span onClick={handleDelete} className='text-red-600 cursor-pointer'>Delete account</span>
                 <span className='text-red-600 cursor-pointer'>Sign In</span>
             </div>
 
