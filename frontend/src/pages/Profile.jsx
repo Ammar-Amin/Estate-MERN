@@ -14,6 +14,8 @@ export default function Profile() {
     let [uploadErr, setUploadErr] = useState(null)
     let [formData, setFormData] = useState({})
     let [updateSuccess, setUpdateSuccess] = useState(false)
+    let [showListingsErr, setShowListingsErr] = useState(false)
+    let [userListing, setUserListing] = useState([])
     let dispatch = useDispatch()
 
     useEffect(() => {
@@ -107,6 +109,22 @@ export default function Profile() {
         }
     }
 
+    const handleShowListings = async () => {
+        try {
+            setShowListingsErr(false);
+            const res = await fetch(`/api/user/listings/${currentUser._id}`);
+            const data = await res.json();
+            if (data.success === false) {
+                setShowListingsErr(true);
+                return;
+            }
+            // console.log("All Listings : ", data);
+            setUserListing(data)
+        } catch (error) {
+            setShowListingsErr(true)
+        }
+    }
+
     return (
         <div className='p-3 max-w-lg mx-auto'>
             {/* <h1 className='text-center text-3xl font-semibold mt-7'>Profile</h1> */}
@@ -176,6 +194,37 @@ export default function Profile() {
 
             <p className='mx-5 font-bold text-red-500'>{error ? error : ''}</p>
             <p className='mx-5 font-bold text-green-500'>{updateSuccess ? 'User is updated successfully' : ''}</p>
+
+            <div className='flex flex-col justify-center gap-2'>
+                <button onClick={handleShowListings} className='font-semibold text-green-600'>Show Listings</button>
+                <p className='text-sm text-red-600'>{showListingsErr ? "Error Showing Listings!" : ""}</p>
+                {
+                    userListing &&
+                    userListing.length > 0 &&
+                    <div className='flex flex-col gap-4'>
+                        <h1 className='text-center text-2xl font-medium'>Your Listings</h1>
+                        {
+                            userListing.map(user => (<div key={user._id}
+                                className='bg-slate-200 border-[1px] border-slate-400 p-3 flex justify-between items-center gap-3 rounded-md'>
+                                <Link to={`/listing/${user._id}`}>
+                                    <img src={user.imageUrls[0]} alt='img'
+                                        className='w-20 h-20 object-contain rounded-md'
+                                    />
+                                </Link>
+                                <Link to={`/listing/${user._id}`}
+                                    className='flex-1 text-slate-700 font-semibold truncate'>
+                                    <p className='hover:underline text-lg'>{user.name}</p>
+                                    <p className='text-sm'>{user.address}</p>
+                                </Link>
+                                <div className='flex flex-col gap-2'>
+                                    <button className='px-4 bg-green-600 text-white rounded-md hover:opacity-90'>Edit</button>
+                                    <button className='px-4 bg-red-500 text-white rounded-md hover:opacity-90'>Del</button>
+                                </div>
+                            </div>))
+                        }
+                    </div>
+                }
+            </div>
         </div>
     )
 }
