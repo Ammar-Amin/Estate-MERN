@@ -236,7 +236,9 @@ export default function Profile() {
                                     <p className='text-sm'>{user.address}</p>
                                 </Link>
                                 <div className='flex flex-col gap-2'>
-                                    <button className='px-4 bg-green-600 text-white rounded-md hover:opacity-90'>Edit</button>
+                                    <Link to={`/edit-listing/${user._id}`}>
+                                        <button className='px-4 bg-green-600 text-white rounded-md hover:opacity-90'>Edit</button>
+                                    </Link>
                                     <button onClick={() => handleListingDelete(user._id)} className='px-4 bg-red-500 text-white rounded-md hover:opacity-90'>Del</button>
                                 </div>
                             </div>))
