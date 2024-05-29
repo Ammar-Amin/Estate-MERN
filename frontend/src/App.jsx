@@ -9,6 +9,7 @@ import Header from './components/Header'
 import ProtectedRoute from './components/ProtectedRoute'
 import CreateListing from './pages/CreateListing'
 import EditListing from './pages/EditListing'
+import Listing from './pages/Listing'
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
           <Route path='/create-listing' element={<CreateListing />} />
           <Route path='/edit-listing/:listingId' element={<EditListing />} />
         </Route>
+        <Route path='/listing/:listingId' element={<Listing />} />
         <Route path='/about' element={<About />} />
       </Routes>
     </BrowserRouter>
