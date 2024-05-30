@@ -14,6 +14,8 @@ import {
 import { GiSofa } from "react-icons/gi";
 import { GiKitchenScale } from "react-icons/gi";
 import { BsSignNoParkingFill } from "react-icons/bs";
+import { useSelector } from 'react-redux';
+import Contact from './Contact';
 
 function Listing() {
     SwiperCore.use([Navigation])
@@ -21,6 +23,8 @@ function Listing() {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
     const [copied, setCopied] = useState(false);
+    const [contact, setContact] = useState(false)
+    const { currentUser } = useSelector(state => state.user)
     const params = useParams()
 
     useEffect(() => {
@@ -143,6 +147,13 @@ function Listing() {
                                     {listing.furnished ? 'Furnished' : 'Unfurnished'}
                                 </li>
                             </ul>
+                            {
+                                listing && currentUser._id !== listing.userRef && !contact &&
+                                <button onClick={() => setContact(true)} className='w-full border p-3 rounded-lg uppercase text-white bg-slate-700 hover:opacity-95'>
+                                    Contact landlord
+                                </button>
+                            }
+                            {contact && <Contact listing={listing} />}
                         </div>
                     </div>
                 )
