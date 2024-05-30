@@ -2,6 +2,7 @@ import { errorHandler } from "../utils/error.js";
 import bcryptjs from 'bcryptjs';
 import User from "../models/user.model.js";
 import mongoose from "mongoose";
+import Listing from "../models/listing.model.js";
 export const test = (req, res) => {
     res.json({
         status: 200,
@@ -11,7 +12,7 @@ export const test = (req, res) => {
     })
 }
 
-export const allUsers = async (req, res) => {
+export const allUsers = async (req, res, next) => {
     try {
         let allUsers = await User.find();
         res.status(200).json(allUsers)
