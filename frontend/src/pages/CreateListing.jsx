@@ -232,7 +232,11 @@ function CreateListing() {
                             <input type='number' id='regularPrice' min='50' max='1000000' required className='p-3 border border-gray-300 rounded-md'
                                 value={formData.regularPrice}
                                 onChange={handleChange} />
-                            <p>Regular Price <span className='text-xs sm:text-sm'>($/month)</span></p>
+                            <p>Regular Price {
+                                formData.type === 'rent' && (
+                                    <span className='text-xs sm:text-sm'>($/month)</span>
+                                )
+                            }</p>
                         </div>
                         {
                             formData.offer &&
@@ -240,7 +244,11 @@ function CreateListing() {
                                 <input type='number' id='discountPrice' min='0' max='1000000' required className='p-3 border border-gray-300 rounded-md'
                                     value={formData.discountPrice}
                                     onChange={handleChange} />
-                                <p>Discount Price <span className='text-xs sm:text-sm'>($/month)</span></p>
+                                <p>Discount Price {
+                                    formData.type === 'rent' && (
+                                        <span className='text-xs sm:text-sm'>($/month)</span>
+                                    )
+                                }</p>
                             </div>
                         }
                     </div>
