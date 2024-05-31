@@ -50,6 +50,7 @@ function CreateListing() {
                 setUploading(false);
             }).catch((error) => {
                 setImageUploadError(error.message)
+                setUploading(false);
             });
         } else {
             setImageUploadError('You can only upload 6 images per listing');
@@ -132,7 +133,7 @@ function CreateListing() {
                 setError(data.message);
             }
             // console.log("form data saved successfully", formData)
-            navigate(`listing/${data._id}`)
+            navigate(`/listing/${data._id}`)
         } catch (error) {
             setError(error.message);
             setLoading(false);
