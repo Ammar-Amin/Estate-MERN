@@ -223,9 +223,16 @@ export default function Search() {
                 <h1 className='text-3xl font-semibold p-3 text-slate-700 mt-2 sm:mt-5'>Listing results:</h1>
                 <div className='p-4 sm:p-7 flex flex-wrap gap-6'>
                     {
-                        loading && (<p className='text-xl text-slate-700 text-center w-full'>
-                            Loading...
-                        </p>)
+                        loading && (
+                            <div className='w-full flex justify-center items-center'>
+                                <section class="dots-container">
+                                    <div class="dot"></div>
+                                    <div class="dot"></div>
+                                    <div class="dot"></div>
+                                    <div class="dot"></div>
+                                    <div class="dot"></div>
+                                </section>
+                            </div>)
                     }
                     {
                         !loading && listings.length === 0 && (<p className='text-xl text-slate-700'>No listing found!</p>)
