@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
@@ -22,7 +22,7 @@ function Header() {
         if (searchTermInUrl) {
             setSearch(searchTermInUrl);
         }
-    }, [location.search]);
+    }, []);
 
     return (
         <header className='bg-slate-200 shadow-md'>
