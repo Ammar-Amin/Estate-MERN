@@ -65,7 +65,7 @@ export const google = async (req, res, next) => {
             const { password: pass, ...rest } = newUser._doc;
             res
                 .cookie('access_token', token, { httpOnly: true })
-                .statusCode(200)
+                .status(200)
                 .json(rest)
         }
     } catch (err) {

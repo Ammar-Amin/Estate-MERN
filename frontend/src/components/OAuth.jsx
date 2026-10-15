@@ -37,6 +37,7 @@ function OAuth() {
             navigate('/')
         } catch (err) {
             console.log("Couldn't sign in with Google", err);
+            dispatch(signInFailure(err.code || err.message));
         }
     };
 
